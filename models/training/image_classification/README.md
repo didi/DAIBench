@@ -3,85 +3,29 @@ This benchmark uses resnet v1.5 to classify images with a fork from
 https://github.com/tensorflow/models/tree/master/official/resnet.
 
 # 2. Directions
-### Steps to configure machine
-To setup the environment on Ubuntu 16.04 (16 CPUs, one P100, 100 GB disk), you
-can use these commands. This may vary on a different operating system or
-graphics card.
+## Install docker & nvidia-docker
+## Download & Prepare Data
+Benchmark uses ImageNet2012 dataset to train, files including:
+- ILSVRC2012_img_train.tar
+- ILSVRC2012_img_val.tar
+- synset_labels.txt
 
+Download dataset, export file path as ENV IMAGENET_HOME and run `preprocess.sh`.
+`preprocess.sh` would extract dataset file and execute `imagenet_to_gcs.py` to create TFRecords due to Python version.All pre-processed data would be mounted at `${IMAGENET_HOME}/imagenet/combined`.
+## Build Docker
 ```bash
-# Install docker
-sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
-
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo apt-key fingerprint 0EBFCD88
-sudo add-apt-repository    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
-sudo apt update
-# sudo apt install docker-ce -y
-sudo apt install docker-ce=18.03.0~ce-0~ubuntu -y --allow-downgrades
-
-# Install nvidia-docker2
-curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey |   sudo apt-key add -
-curl -s -L https://nvidia.github.io/nvidia-docker/ubuntu16.04/nvidia-docker.list |   sudo tee /etc/apt/sources.list.d/nvidia-docker.list
-sudo apt-get update
-sudo apt install nvidia-docker2 -y
-
-
-sudo tee /etc/docker/daemon.json <<EOF
-{
-    "runtimes": {
-        "nvidia": {
-            "path": "/usr/bin/nvidia-container-runtime",
-            "runtimeArgs": []
-        }
-    }
-}
-EOF
-sudo pkill -SIGHUP dockerd
-
-sudo apt install -y bridge-utils
-sudo service docker stop
-sleep 1;
-sudo iptables -t nat -F
-sleep 1;
-sudo ifconfig docker0 down
-sleep 1;
-sudo brctl delbr docker0
-sleep 1;
-sudo service docker start
-
-ssh-keyscan github.com >> ~/.ssh/known_hosts
-git clone git@github.com:mlperf/reference.git
-
-```
-
-
-### Steps to download and prepare data
-The following [script](https://github.com/tensorflow/tpu/blob/master/tools/datasets/imagenet_to_gcs.py)
-was used to create TFRecords from ImageNet data using instructions in the
-[README](https://github.com/tensorflow/tpu/tree/master/tools/datasets#imagenet_to_gcspy).
-TFRecords can be created directly from [ImageNet](http://image-net.org) or from
-the .tar files downloaded from image-net.org.
-
-
-### Steps to run and time
-We assume that imagenet pre-processed has already been mounted at `/imn`.
-
-```bash
-    cd ~/reference/image_classification/tensorflow/
+    cd ~/DAIBench/models/training/image_classification/tensorflow/
     IMAGE=`sudo docker build . | tail -n 1 | awk '{print $3}'`
+    sudo docker tag $IMAGE mlperf/image_classification
+```
+## Start Docker & Run
+We assume that imagenet pre-processed has already been mounted at `/imn/imagenet/combined`.
+
+```bash
     SEED=2
     NOW=`date "+%F-%T"`
     sudo docker run -v /imn:/imn --runtime=nvidia -t -i $IMAGE "./run_and_time.sh" $SEED | tee benchmark-$NOW.log
-
-# For reference,
-
-    $ ls /imn
-    imagenet  lost+found
 ```
-
 
 # 3. Dataset/Environment
 ### Publication/Attribution

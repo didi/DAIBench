@@ -18,7 +18,6 @@ ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 RUN apt-get install -y virtualenv htop
 RUN pip3 install --upgrade numpy scipy sklearn -i https://pypi.douban.com/simple/
 
-
 # Mount data into the docker
 ADD . /research/resnet
 
