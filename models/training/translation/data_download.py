@@ -34,18 +34,18 @@ logging.getLogger().setLevel(logging.INFO)
 # Data sources for training/evaluating the transformer translation model.
 _TRAIN_DATA_SOURCES = [
     {
-        "url": "https://pts-source.s3.didiyunapi.com/mlperf/dataset/" \
-              "training-parallel-nc-v12.tgz",
+        "url": "http://data.statmt.org/wmt17/translation-task/"
+               "training-parallel-nc-v12.tgz",
         "input": "news-commentary-v12.de-en.en",
         "target": "news-commentary-v12.de-en.de",
     },
     {
-        "url": "https://pts-source.s3.didiyunapi.com/mlperf/dataset/training-parallel-commoncrawl.tgz",
+        "url": "http://www.statmt.org/wmt13/training-parallel-commoncrawl.tgz",
         "input": "commoncrawl.de-en.en",
         "target": "commoncrawl.de-en.de",
     },
     {
-        "url": "	https://pts-source.s3.didiyunapi.com/mlperf/dataset/training-parallel-europarl-v7.tgz",
+        "url": "http://www.statmt.org/wmt13/training-parallel-europarl-v7.tgz",
         "input": "europarl-v7.de-en.en",
         "target": "europarl-v7.de-en.de",
     },
@@ -53,7 +53,7 @@ _TRAIN_DATA_SOURCES = [
 
 _EVAL_DATA_SOURCES = [
     {
-        "url": "https://pts-source.s3.didiyunapi.com/mlperf/dataset/dev17.tgz",
+        "url": "http://data.statmt.org/wmt17/translation-task/dev.tgz",
         "input": "newstest2013.en",
         "target": "newstest2013.de",
     }
