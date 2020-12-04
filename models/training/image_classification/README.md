@@ -15,8 +15,7 @@ Download dataset, export file path as ENV IMAGENET_HOME and run `preprocess.sh`.
 ## Build Docker
 ```bash
     cd ~/DAIBench/models/training/image_classification/tensorflow/
-    IMAGE=`sudo docker build . | tail -n 1 | awk '{print $3}'`
-    sudo docker tag $IMAGE mlperf/image_classification
+    sudo docker build . --rm -t image_classification/resnet
 ```
 ## Start Docker & Run
 We assume that imagenet pre-processed has already been mounted at `/imn/imagenet/combined`.
