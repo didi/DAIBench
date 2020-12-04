@@ -4,7 +4,7 @@ This problem uses recurrent neural network to do language translation.
 
 ### Recommended setup
 * [nvidia-docker](https://github.com/NVIDIA/nvidia-docker)
-* [pytorch/pytorch:1.0.1-cuda10.0-cudnn7-runtime container](https://hub.docker.com/r/pytorch/pytorch/tags/)
+* [nvcr.io/nvidia/pytorch:20.10-py3]
 
 # 2. Directions
 ### Install Docker & nvidia-docker
