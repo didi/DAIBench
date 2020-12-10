@@ -12,14 +12,16 @@
 
 DATESTAMP=${DATESTAMP:-`date +'%y%m%d%H%M%S%N'`}
 
-## Data, container and volumes
+## defaults
 BENCHMARK=${BENCHMARK:-"ssd"}
 BENCHMARK_NAME="ssd"
 CONT=${CONT:-"models/$BENCHMARK"}
 DATADIR=${DATADIR:-"$(pwd)/../dataset"}
-LOGDIR=${LOGDIR:-"$(pwd)/.."}
-NEXP=${NEXP:-5} # Default number of times to run the benchmark
+LOGDIR=${LOGDIR:-"$(pwd)"}
 DGXSYSTEM=${DGXSYSTEM:-"test"}
+
+# Default number of times to run the benchmark
+NEXP=${NEXP:-1} 
 
 ## DO NOT CHANGE ANYTHING BELOW -- DL params are in run_and_time.sh and config_<system>.sh files 
 
