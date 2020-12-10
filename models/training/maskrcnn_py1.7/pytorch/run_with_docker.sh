@@ -10,7 +10,7 @@ set -euxo pipefail
 : "${DATESTAMP:=$(date +'%y%m%d%H%M%S%N')}"
 : "${CLEAR_CACHES:=1}"
 : "${DATADIR:=$(pwd)/dataset}"
-: "${LOGDIR:=$(pwd)/results}"
+: "${LOGDIR:=$(pwd)/../results}"
 
 # Other vars
 readonly _config_file="./config_${DGXSYSTEM}.sh"

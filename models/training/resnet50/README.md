@@ -14,8 +14,8 @@ Download dataset, export file path as ENV IMAGENET_HOME and run `preprocess.sh`.
 `preprocess.sh` would extract dataset file and execute `imagenet_to_gcs.py` to create TFRecords due to Python version.All pre-processed data would be mounted at `${IMAGENET_HOME}/imagenet/combined`.
 ## Build Docker
 ```bash
-    cd ~/DAIBench/models/training/image_classification/tensorflow/
-    sudo docker build . --rm -t image_classification/resnet
+    cd ~/DAIBench/models/training/resnet50/tensorflow/
+    sudo docker build . --rm -t models/resnet50
 ```
 ## Start Docker & Run
 We assume that imagenet pre-processed has already been mounted at `/imn/imagenet/combined`.
@@ -23,7 +23,7 @@ We assume that imagenet pre-processed has already been mounted at `/imn/imagenet
 ```bash
     SEED=2
     NOW=`date "+%F-%T"`
-    sudo docker run -v /imn:/imn --runtime=nvidia -t -i $IMAGE "./run_and_time.sh" $SEED | tee benchmark-$NOW.log
+    sudo docker run -v /imn:/imn --runtime=nvidia -t -i models/resnet50 "./run_and_time.sh" $SEED | tee benchmark-$NOW.log
 ```
 
 # 3. Dataset/Environment
