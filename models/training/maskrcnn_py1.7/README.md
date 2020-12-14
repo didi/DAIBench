@@ -1,42 +1,41 @@
 # 1. Problem 
 This benchmark uses Mask R-CNN for object detection.
-
-## Requirements
-
-* [PyTorch 20.10-py3 NGC container](https://ngc.nvidia.com/registry/nvidia-pytorch)
-* Slurm with [Pyxis](https://github.com/NVIDIA/pyxis) and [Enroot](https://github.com/NVIDIA/enroot)
-* [nvidia-docker](https://github.com/NVIDIA/nvidia-docker)
-
 # 2. Directions
 
-### Steps to download and verify data
+### Prepare dataset and model
+```bash
+bash download_dataset.sh
+bash download_backbone.sh
+```
+By default, dataset `COCO2017` and model `R-50.pkl` would be mounted at `maskrcnn/pytorch/dataset/coco2017`
 
 ### Build docker
 ```bash
 cd pytorch
-sudo docker build .
-//todo tag models/maskrcnn
+CONT=`sudo docker build . | tail -n 1 | awk '{print $3}'`
+sudo docker tag $CONT models/maskrcnn
 ```
 
 ### Hyperparameter settings
-
 Hyperparameters are recorded in the `config_test.sh` files for each configuration and in `run_and_time.sh`.
 
+### Start docker & run
+```bash
+bash run_with_docker.sh
+```
 # 3. Dataset/Environment
+
 ### Publiction/Attribution.
 Microsoft COCO: COmmon Objects in Context. 2017.
 
 ### Training and test data separation
 Train on 2017 COCO train data set, compute mAP on 2017 COCO val data set.
 
-
 # 4. Model
 ### Publication/Attribution
 
 We use a version of Mask R-CNN with a ResNet50 backbone. See the following papers for more background:
-
 [1] [Mask R-CNN](https://arxiv.org/abs/1703.06870) by Kaiming He, Georgia Gkioxari, Piotr Dollár, Ross Girshick, Mar 2017.
-
 [2] [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385) by Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun, Dec 2015.
 
 

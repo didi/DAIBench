@@ -6,7 +6,7 @@ set -euxo pipefail
 # Vars with defaults
 : "${CONT:=models/maskrcnn}"
 : "${DGXSYSTEM:=test}"
-: "${NEXP:=5}"
+: "${NEXP:=1}"
 : "${DATESTAMP:=$(date +'%y%m%d%H%M%S%N')}"
 : "${CLEAR_CACHES:=1}"
 : "${DATADIR:=$(pwd)/dataset}"
