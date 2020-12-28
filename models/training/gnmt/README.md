@@ -24,7 +24,7 @@ sudo docker build . --rm -t rnn_translator/gnmt
 ```bash
   SEED=1
   NOW=`date "+%F-%T"`
-  sudo nvidia-docker run -it --rm --ipc=host \
+  sudo nvidia-docker run -it --ipc=host \
     -v ~/DAIBench/models/rnn_translator/pytorch/data:/data \
     rnn_translator/gnmt "./run_and_time.sh" $SEED |tee benchmark-$NOW.log
 ```

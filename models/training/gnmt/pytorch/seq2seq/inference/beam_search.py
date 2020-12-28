@@ -239,7 +239,7 @@ class SequenceGenerator:
             new_scores = new_scores.view(-1, beam_size * beam_size)
             # index: (batch, beam)
             _, index = new_scores.topk(beam_size, dim=1)
-            source_beam = index / beam_size
+            source_beam = index // beam_size
 
             new_scores = new_scores.view(-1, beam_size * beam_size)
             best_scores = torch.gather(new_scores, 1, index)
