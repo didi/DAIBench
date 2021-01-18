@@ -61,5 +61,3 @@ Box mAP of 0.377, mask mAP of 0.339
 ### Evaluation frequency
 Once per epoch, 118k.
 
-### Evaluation thoroughness
-Evaluate over the entire validation set. Use the [NVIDIA COCO API](https://github.com/NVIDIA/cocoapi/) to compute mAP.
