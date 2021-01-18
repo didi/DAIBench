@@ -24,7 +24,7 @@ ADD . /research/resnet
 
 WORKDIR /research/resnet
 RUN pip3 install -r official/requirements.txt -i https://pypi.douban.com/simple/
-
+RUN pip3 install -r requirements.txt -i https://pypi.douban.com/simple/
 
 ENTRYPOINT ["/bin/bash"]
 
