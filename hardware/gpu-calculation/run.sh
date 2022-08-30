@@ -5,9 +5,9 @@ LOG=`pwd`
 
 export LD_LIBRARY_PATH=$CUDA_PATH/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
-cd $CUDA_PATH/samples/7_CUDALibraries/batchCUBLAS
+make
 
-sudo make
+echo "Result would be saved as 'gpu_calc.log'"
+./calc_gpu_peak_gflops.bin > $LOG/gpu_calc.log
 
-echo "Result would be saved as 'batchCUBLAS.log'"
-./batchCUBLAS > $LOG/batchCUBLAS.log
+make clean
