@@ -56,6 +56,7 @@ int cc2cores(int major, int minor)
     {0x75,  64},
     {0x80,  64},
     {0x86, 128},
+    {0x87, 128},
     {-1, -1}
   };
 
@@ -216,7 +217,7 @@ int main(int argc, char **argv)
     printf("=================GPU #%d=================\n", i);
     CHECK_CUDA(cudaGetDeviceProperties(&prop, i), "cudaGetDeviceProperties error");
     printf("GPU Name = %s\n", prop.name);
-    printf("Compute Capability = %d.%d\n", prop.major, prop.minor);
+    printf("Compute Capability = %d%d\n", prop.major, prop.minor);
     printf("GPU SMs = %d\n", prop.multiProcessorCount);
     printf("GPU CUDA cores = %d\n", cc2cores(prop.major, prop.minor) * prop.multiProcessorCount);
     printf("GPU SM clock rate = %.3f GHz\n", prop.clockRate/1e6);
@@ -254,8 +255,8 @@ int main(int argc, char **argv)
       printf("Tensor Core BF16 Peak Performance = %.3f GFLOPS\n", cc2cores(prop.major, prop.minor) * prop.multiProcessorCount * (prop.clockRate / 1e6) * 2 * 16);
       printf("Tensor Core INT8 Peak Performance = %.3f GFLOPS\n", cc2cores(prop.major, prop.minor) * prop.multiProcessorCount * (prop.clockRate / 1e6) * 2 * 32);
     }
-    cudaSetDevice(i);
-    run_sgemm(2048, 8192, 4096);
+    // cudaSetDevice(i);
+    // run_sgemm(2048, 8192, 4096);
   }
   return 0;
 }
