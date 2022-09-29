@@ -29,8 +29,8 @@ rm $IMAGENET_HOME/train/*.tar
  
 # Download labels file.
 wget -O $IMAGENET_HOME/synset_labels.txt \
-https://raw.githubusercontent.com/tensorflow/models/master/research/inception/inception/data/imagenet_2012_validation_synset_labels.txt
- 
+https://raw.githubusercontent.com/tensorflow/models/master/research/slim/datasets/imagenet_2012_validation_synset_labels.txt
+
 # Process the files. Remember to get the script from github first. The TFRecords
 # will end up in the --local_scratch_dir. To upload to gcs with this method
 # leave off `nogcs_upload` and provide gcs flags for project and output_path.
