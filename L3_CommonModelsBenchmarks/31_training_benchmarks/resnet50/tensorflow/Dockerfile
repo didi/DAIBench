@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/tensorflow:20.10-tf1-py3
+FROM nvcr.io/nvidia/tensorflow:22.09-tf1-py3
 
 WORKDIR /research
 
