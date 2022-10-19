@@ -1,13 +1,15 @@
 # DAIBench
 
-DAIBench (`DiDi Cloud AI Benchmark`) aims to provide a set of GPU evaluation sets for AI production environments, spanning different types of GPU servers and cloud environments, to provide users with effective and credible test results for future hardware selection , Software and library optimization, business model improvement, link stress testing and other stages to lay a solid data foundation and technical reference.
+DAIBench (`DiDi AI Benchmarks`) aims to provide a set of AI evaluation sets for production environments, spanning different types of GPU servers and cloud environments, to provide users with effective and credible test results for future hardware selection , software and library optimization, business model improvement, link stress testing and other stages to lay a solid data foundation and technical reference.
 
 ## Supported Features
-- Evaluation from Hardware to Application
-- Foreign BENCHMARK adaptation
-- Impact of virtualized cloud environment scenarios and business pertinence
+- Layerwised benchmarking, from hardwares(L1), operators(L2) to models(L3), higher level benchmarking is TBD.
+- Cloud-native benchmarking, containerized deploying, easy to use.
+- Multi-cloud benchmarking, results are useful for price/performance considerations.
+
 
 ## General Structure
+
 DAIBench comprehensively considers the existing GPU performance testing tools, and divides the indicators into hardware layer, framework (operator) layer, and algorithm layer.
 
 For each level, DAIBench currently supports the following tests:

@@ -26,3 +26,23 @@ make cutlass_profiler -j12
 cd ../..
 make clean
 
+cd $LOG
+
+git clone https://github.com/NVIDIA/cuda-samples --recursive
+cd cuda-samples
+git reset --hard b312abaa07ffdc1ba6e3d44a9bc1a8e89149c20b
+
+cd $LOG/cuda-samples/Samples/1_Utilities/deviceQuery/
+make
+echo "Result would be saved as 'deviceQueryInfo.log'"
+./deviceQuery > $LOG/deviceQueryInfo.log
+
+cd $LOG/cuda-samples/Samples/1_Utilities/bandwidthTest
+make
+echo "Result would be saved as 'bandwidthTest.log'"
+./bandwidthTest > $LOG/bandwidthTest.log
+
+cd $LOG/cuda-samples/Samples/5_Domain_Specific/p2pBandwidthLatencyTest
+make
+echo "Result would be saved as 'p2pBandwidthLatencyTest.log'"
+./p2pBandwidthLatencyTest > $LOG/p2pBandwidthLatencyTest.log
