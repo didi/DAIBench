@@ -12,7 +12,7 @@ for model in alexnet googlenet resnet18 resnet50 resnet101 resnet152 vgg16 vgg19
 do
   echo -e "===================${model}===================="
   batch=1
-  echo -e "Batch\\Precision\tFP32\tTF32\tFP32(cudagraph)\tTF32(cudagraph)\tFP16\tINT8"
+  echo -e "Batch\tFP32\tTF32\tFP32*\tTF32*\tFP16\tINT8"
   while [ $batch -le 128 ]
   do
     fp32=`cat $WORKDIR/${model}_batch${batch}_fp32.log | grep "Throughput" | grep "qps" | awk '{print $4}'`
@@ -25,3 +25,4 @@ do
     batch=`expr $batch \* 2`
   done
 done
+echo -e "\nNote: * means with cudagraph"
