@@ -1,0 +1,5 @@
+{
+    "val.total_ips": {"1": {"256": {"syntetic": 2666.985015893136}}},
+    "val.compute_ips": {"1": {"256": {"syntetic": 2668.1022845256684}}},
+    "val.compute_latency": {"1": {"256": {"syntetic": 0.11137200189707231}}}
+}

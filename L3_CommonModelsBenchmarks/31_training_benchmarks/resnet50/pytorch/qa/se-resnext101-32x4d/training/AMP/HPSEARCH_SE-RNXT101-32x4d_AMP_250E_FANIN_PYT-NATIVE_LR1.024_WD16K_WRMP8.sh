@@ -1,0 +1,1 @@
+python ./multiproc.py --nproc_per_node 8 ./main.py /data/imagenet --raport-file raport.json -j5 -p 100 --arch se-resnext101-32x4d --label-smoothing 0.1 --workspace $1 -b 128 --amp  --static-loss-scale 128 --optimizer-batch-size 1024 --lr 1.024 --mom 0.875 --lr-schedule cosine --epochs 250 --mixup 0.2 -c fanin --data-backend pytorch --lr 1.024 --wd 6.103515625e-05 --warmup 8

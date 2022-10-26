@@ -1,0 +1,259 @@
+{
+    "keys": [ "common", "platform", "scope", "model", "mode", "precision" ],
+    "dirs": [ "scope" ],
+    "common" : [
+        { "name":"", "params": "python ./qa/testscript.py /imagenet --raport `basename ${0} .sh`_raport.json --workspace $1 $2"}
+    ],
+    "mode" : [
+        { "name": "TRAIN", "params": "--mode training"},
+        { "name": "INFERENCE", "params": "--mode inference"}
+    ],
+    "platform" : [
+        {
+            "name": "T4",
+            "params": "-j 5",
+            "variants": {
+                "scope": [
+                    {
+                        "name" : "L3",
+                        "params": "--data-backends syntetic dali-gpu dali-cpu pytorch --bench-iterations 100 --bench-warmup 3 --epochs 2",
+                        "variants": {
+                                "precision" : [
+                                    {"name": "AMP",  "params": "--amp --static-loss-scale 128 --bs 128 64 32 16 8 4 2 1"},
+                                    {"name": "FP16", "params": "--fp16 --static-loss-scale 128 --bs 128 64 32 16 8 4 2 1"},
+                                    {"name": "FP32", "params": " --bs 64 32 16 8 4 2 1"}
+                                ],
+                                "mode" : [
+                                    { "name": "INFERENCE", "params": "--mode inference --ngpus 1"}
+                                ]
+                        }
+                    },
+                    {
+                        "name" : "L0",
+                        "params": "--data-backends syntetic --bench-iterations 100 --bench-warmup 3 --epochs 1",
+                        "variants": {
+                                "precision" : [
+                                    {"name": "AMP",  "params": "--amp --static-loss-scale 128 --bs 128"},
+                                    {"name": "FP16", "params": "--fp16 --static-loss-scale 128 --bs 128"},
+                                    {"name": "FP32", "params": " --bs 64"}
+                                ],
+                                "mode" : [
+                                    { "name": "INFERENCE", "params": "--mode inference --ngpus 1"}
+                                ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "DGX1-16G",
+            "params": "-j 5",
+            "variants": {
+                "scope": [
+                    {"name" : "BS-SCAN", "params": "--data-backends syntetic --bench-iterations 10 --bench-warmup 1 --epochs 1 --bs 1 2 4 8 16 32 48 64 96 112 128 160 192 224 256 --ngpus 1"},
+                    {
+                        "name" : "L3",
+                        "params": "--data-backends syntetic dali-gpu dali-cpu pytorch --bench-iterations 100 --bench-warmup 3 --epochs 2",
+                        "variants": {
+                                "precision" : [
+                                    {"name": "AMP",  "params": "--amp --static-loss-scale 128 --bs 128 112 64"},
+                                    {"name": "FP16", "params": "--fp16 --static-loss-scale 128 --bs 128 112 64"},
+                                    {"name": "FP32", "params": " --bs 64 48 32"}
+                                ],
+                                "mode" : [
+                                    { "name": "TRAIN", "params": "--mode training --ngpus 1 8"}
+                                ]
+                        }
+                    },
+                    {
+                        "name" : "L3",
+                        "params": "--data-backends syntetic dali-gpu pytorch --bench-iterations 100 --bench-warmup 3 --epochs 2",
+                        "variants": {
+                                "precision" : [
+                                    {"name": "AMP",  "params": "--amp --static-loss-scale 128 --bs 128 64 32 16 8 4 2 1"},
+                                    {"name": "FP16", "params": "--fp16 --static-loss-scale 128 --bs 128 64 32 16 8 4 2 1"},
+                                    {"name": "FP32", "params": " --bs 64 32 16 8 4 2 1"}
+                                ],
+                                "mode" : [
+                                    { "name": "INFERENCE", "params": "--mode inference --ngpus 1"}
+                                ]
+                        }
+                    },
+                    {
+                        "name" : "L2",
+                        "params": "--data-backends dali-cpu --bench-iterations 100 --bench-warmup 3 --epochs 2",
+                        "variants": {
+                                "precision" : [
+                                    {"name": "AMP",  "params": "--amp --static-loss-scale 128 --bs 128"},
+                                    {"name": "FP32", "params": " --bs 64"}
+                                ],
+                                "mode" : [
+                                    { "name": "TRAIN", "params": "--mode training --ngpus 1 8"},
+                                    { "name": "INFERENCE", "params": "--mode inference --ngpus 1"}
+                                ]
+                        }
+                    },
+                    {
+                        "name" : "L0",
+                        "params": "--data-backends syntetic --bench-iterations 100 --bench-warmup 3 --epochs 1",
+                        "variants": {
+                                "precision" : [
+                                    {"name": "AMP",  "params": "--amp --static-loss-scale 128 --bs 128"},
+                                    {"name": "FP16", "params": "--fp16 --static-loss-scale 128 --bs 128"},
+                                    {"name": "FP32", "params": " --bs 64"}
+                                ],
+                                "mode" : [
+                                    { "name": "TRAIN", "params": "--mode training --ngpus 8"},
+                                    { "name": "INFERENCE", "params": "--mode inference --ngpus 1"}
+                                ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "DGX1-32G",
+            "params": "-j 5",
+            "variants": {
+                "scope": [
+                    {"name" : "BS-SCAN", "params": "--data-backends syntetic --bench-iterations 10 --bench-warmup 1 --epochs 1 --bs 1 2 4 8 16 32 48 64 96 112 128 160 192 224 256 320 384 448 512 --ngpus 1"},
+                    {
+                        "name" : "L3",
+                        "params": "--data-backends syntetic dali-gpu dali-cpu pytorch --bench-iterations 100 --bench-warmup 3 --epochs 2",
+                        "variants": {
+                                "precision" : [
+                                    {"name": "AMP",  "params": "--amp --static-loss-scale 128 --bs 128 112 64"},
+                                    {"name": "FP16", "params": "--fp16 --static-loss-scale 128 --bs 128 112 64"},
+                                    {"name": "FP32", "params": " --bs 64 48 32"}
+                                ],
+                                "mode" : [
+                                    { "name": "TRAIN", "params": "--mode training --ngpus 1 8"}
+                                ]
+                        }
+                    },
+                    {
+                        "name" : "L3",
+                        "params": "--data-backends syntetic dali-gpu pytorch --bench-iterations 100 --bench-warmup 3 --epochs 2",
+                        "variants": {
+                                "precision" : [
+                                    {"name": "AMP",  "params": "--amp --static-loss-scale 128 --bs 128 64 32 16 8 4 2 1"},
+                                    {"name": "FP16", "params": "--fp16 --static-loss-scale 128 --bs 128 64 32 16 8 4 2 1"},
+                                    {"name": "FP32", "params": " --bs 64 32 16 8 4 2 1"}
+                                ],
+                                "mode" : [
+                                    { "name": "INFERENCE", "params": "--mode inference --ngpus 1"}
+                                ]
+                        }
+                    },
+                    {
+                        "name" : "L2",
+                        "params": "--data-backends dali-cpu --bench-iterations 100 --bench-warmup 3 --epochs 2",
+                        "variants": {
+                                "precision" : [
+                                    {"name": "AMP",  "params": "--amp --static-loss-scale 128 --bs 128"},
+                                    {"name": "FP32", "params": " --bs 64"}
+                                ],
+                                "mode" : [
+                                    { "name": "TRAIN", "params": "--mode training --ngpus 1 8"},
+                                    { "name": "INFERENCE", "params": "--mode inference --ngpus 1"}
+                                ]
+                        }
+                    },
+                    {
+                        "name" : "L0",
+                        "params": "--data-backends syntetic --bench-iterations 100 --bench-warmup 3 --epochs 1",
+                        "variants": {
+                                "precision" : [
+                                    {"name": "AMP",  "params": "--amp --static-loss-scale 128 --bs 128"},
+                                    {"name": "FP16", "params": "--fp16 --static-loss-scale 128 --bs 128"},
+                                    {"name": "FP32", "params": " --bs 64"}
+                                ],
+                                "mode" : [
+                                    { "name": "TRAIN", "params": "--mode training --ngpus 8"},
+                                    { "name": "INFERENCE", "params": "--mode inference --ngpus 1"}
+                                ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "DGX2",
+            "params": "-j 3",
+            "variants": {
+                "scope": [
+                    {"name" : "BS-SCAN", "params": "--data-backends syntetic --bench-iterations 10 --bench-warmup 1 --epochs 1 --bs 1 2 4 8 16 32 48 64 96 112 128 160 192 224 256 320 384 448 512 --ngpus 1"},
+                    {
+                        "name" : "L3",
+                        "params": "--data-backends syntetic dali-gpu dali-cpu pytorch --bench-iterations 100 --bench-warmup 3 --epochs 2",
+                        "variants": {
+                                "precision" : [
+                                    {"name": "AMP",  "params": "--amp --static-loss-scale 128 --bs 128 112 64"},
+                                    {"name": "FP16", "params": "--fp16 --static-loss-scale 128 --bs 128 112 64"},
+                                    {"name": "FP32", "params": " --bs 64 48 32"}
+                                ],
+                                "mode" : [
+                                    { "name": "TRAIN", "params": "--mode training --ngpus 1 16"}
+                                ]
+                        }
+                    },
+                    {
+                        "name" : "L3",
+                        "params": "--data-backends syntetic dali-gpu pytorch --bench-iterations 100 --bench-warmup 3 --epochs 2",
+                        "variants": {
+                                "precision" : [
+                                    {"name": "AMP",  "params": "--amp --static-loss-scale 128 --bs 128 64 32 16 8 4 2 1"},
+                                    {"name": "FP16", "params": "--fp16 --static-loss-scale 128 --bs 128 64 32 16 8 4 2 1"},
+                                    {"name": "FP32", "params": " --bs 64 32 16 8 4 2 1"}
+                                ],
+                                "mode" : [
+                                    { "name": "INFERENCE", "params": "--mode inference --ngpus 1"}
+                                ]
+                        }
+                    },
+                    {
+                        "name" : "L2",
+                        "params": "--data-backends dali-gpu --bench-iterations 100 --bench-warmup 3 --epochs 2",
+                        "variants": {
+                                "precision" : [
+                                    {"name": "AMP",  "params": "--amp --static-loss-scale 128 --bs 128"},
+                                    {"name": "FP32", "params": " --bs 64"}
+                                ],
+                                "mode" : [
+                                    { "name": "TRAIN", "params": "--mode training --ngpus 1 16"},
+                                    { "name": "INFERENCE", "params": "--mode inference --ngpus 1"}
+                                ]
+                        }
+                    },
+                    {
+                        "name" : "L0",
+                        "params": "--data-backends syntetic --bench-iterations 100 --bench-warmup 3 --epochs 1",
+                        "variants": {
+                                "precision" : [
+                                    {"name": "AMP",  "params": "--amp --static-loss-scale 128 --bs 128"},
+                                    {"name": "FP16", "params": "--fp16 --static-loss-scale 128 --bs 128"},
+                                    {"name": "FP32", "params": " --bs 64"}
+                                ],
+                                "mode" : [
+                                    { "name": "TRAIN", "params": "--mode training --ngpus 16"},
+                                    { "name": "INFERENCE", "params": "--mode inference --ngpus 1"}
+                                ]
+                        }
+                    }
+
+                ]
+            }
+        }
+    ],
+    "precision" : [
+        {"name": "AMP", "params": "--amp --static-loss-scale 128"},
+        {"name": "FP16", "params": "--fp16 --static-loss-scale 128"},
+        {"name": "FP32", "params": ""}
+    ],
+    "model" : [
+        {
+         "name": "RNXT101-32x4d",
+         "params": "--arch resnext101-32x4d -c fanin --label-smoothing 0.1 --mixup 0.0"
+        }
+    ]
+}

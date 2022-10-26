@@ -1,0 +1,39 @@
+{
+    "keys": [ "platform", "model", "precision", "length", "config", "databackend", "LR", "WD", "WRMP"],
+    "dirs": [ "precision" ],
+    "platform": [
+        {
+            "name": "HPSEARCH",
+            "params": "python ./multiproc.py --nproc_per_node 8 ./main.py /data/imagenet --raport-file raport.json -j5 -p 100"
+        }
+    ],
+    "model" : [
+        {
+         "name": "SE-RNXT101-32x4d",
+         "params": "--arch se-resnext101-32x4d --label-smoothing 0.1 --workspace $1"
+        }
+    ],
+    "precision" : [
+        {"name": "AMP",  "params": "-b 128 --amp  --static-loss-scale 128"},
+        {"name": "FP32",  "params": "-b 64"}
+    ],
+    "length": [
+        {"name": "90E",  "params": "--optimizer-batch-size 1024 --lr 1.024 --mom 0.875 --lr-schedule cosine --epochs 90"},
+        {"name": "250E",  "params": "--optimizer-batch-size 1024 --lr 1.024 --mom 0.875 --lr-schedule cosine --epochs 250 --mixup 0.2"}
+    ],
+    "config": [
+        {"name": "FANIN", "params": "-c fanin"}
+    ],
+    "databackend": [
+        {"name": "PYT-NATIVE", "params": "--data-backend pytorch"}
+    ],
+    "LR": [
+        {"name": "LR1.024", "params": "--lr 1.024"}
+    ],
+    "WD": [
+        {"name": "WD16K", "params": "--wd 6.103515625e-05"}
+    ],
+    "WRMP": [
+        {"name": "WRMP8", "params": "--warmup 8"}
+    ]
+}
