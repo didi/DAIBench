@@ -1,0 +1,5 @@
+<<<<<<< HEAD
+{"val.total_ips": {"1": {"256": {"syntetic": 2431.642869565277}}}, "val.compute_ips": {"1": {"256": {"syntetic": 2432.5840383905884}}}, "val.compute_latency": {"1": {"256": {"syntetic": 0.10523792432279003}}}}
+=======
+{"val.total_ips": {"1": {"256": {"syntetic": 2467.7656416314435}}}, "val.compute_ips": {"1": {"256": {"syntetic": 2468.746012476653}}}, "val.compute_latency": {"1": {"256": {"syntetic": 0.1036964022383398}}}}
+>>>>>>> nvidia-release-19.09

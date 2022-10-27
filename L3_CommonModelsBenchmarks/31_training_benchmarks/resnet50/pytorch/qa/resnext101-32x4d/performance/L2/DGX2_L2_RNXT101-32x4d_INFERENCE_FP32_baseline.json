@@ -1,0 +1,1 @@
+{"val.total_ips": {"1": {"64": {"dali-gpu": 441.05923642760524}}}, "val.compute_ips": {"1": {"64": {"dali-gpu": 497.6881109265749}}}, "val.compute_latency": {"1": {"64": {"dali-gpu": 0.12859625475747244}}}}

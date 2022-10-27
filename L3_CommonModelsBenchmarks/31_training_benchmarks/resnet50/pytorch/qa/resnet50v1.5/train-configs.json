@@ -1,0 +1,39 @@
+{
+    "keys": [ "platform", "model", "precision", "length", "config", "databackend"],
+    "dirs": [ "precision" ],
+    "platform": [
+        {
+            "name": "DGX1",
+            "params": "python ./multiproc.py --nproc_per_node 8 ./main.py /data/imagenet --raport-file raport.json -j5 -p 100"
+        },
+        {
+            "name": "DGX2",
+            "params": "python ./multiproc.py --nproc_per_node 16 ./main.py /data/imagenet --raport-file raport.json -j5 -p 100"
+        }
+    ],
+    "model" : [
+        {
+         "name": "RN50",
+         "params": "--arch resnet50 --label-smoothing 0.1 --workspace $1"
+        }
+    ],
+    "precision" : [
+        {"name": "FP32", "params": "-b 64"},
+        {"name": "FP16", "params": "-b 128 --fp16 --static-loss-scale 128"},
+        {"name": "AMP",  "params": "-b 128 --amp  --static-loss-scale 128"}
+    ],
+    "length": [
+        {"name": "STD",  "params": "--lr 0.4 --mom 0.9 --lr-schedule step --epochs 90 --warmup 5 --wd 0.0001"},
+        {"name": "90E",  "params": "--optimizer-batch-size 2048 --lr 2.048 --mom 0.875 --lr-schedule cosine --epochs  90 --warmup 8 --wd 3.0517578125e-05"},
+        {"name": "250E", "params": "--optimizer-batch-size 2048 --lr 2.048 --mom 0.875 --lr-schedule cosine --epochs 250 --warmup 8 --wd 3.0517578125e-05 --mixup 0.2"}
+    ],
+    "config": [
+        {"name": "FANIN", "params": "-c fanin"}
+    ],
+    "databackend": [
+        {"name": "RECIO-CPU", "params": "--data-backend dali-cpu-recio"},
+        {"name": "RECIO-GPU", "params": "--data-backend dali-gpu-recio"},
+        {"name": "PYT-DALI", "params": "--data-backend dali-cpu"},
+        {"name": "PYT-NATIVE", "params": "--data-backend pytorch"}
+    ]
+}
