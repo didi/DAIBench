@@ -118,7 +118,15 @@ Batch	FP32	TF32	FP32*	TF32*	FP16	INT8
 Note: * means with cudagraph
 ```
 
-You can paste them from terminal to excel files, and draw diagrams for better visual effects.
+Meanwhile, `./results.csv` is generated. You can open it by excel, and draw diagrams for better visual effects. You can also compare 2 results by fellowing tool:
 
+```sh
+python3 ./compare_results.py <results1>.csv <results2>.csv
+```
 
+Two compared results files, `./<results1>_over_<results2>.csv` and `./<results1>_over_<results2>.png`, will be generated. Notes that `pandas` and `matplotlib` are required:
+
+```sh
+pip3 install pandas matplotlib
+```
 
