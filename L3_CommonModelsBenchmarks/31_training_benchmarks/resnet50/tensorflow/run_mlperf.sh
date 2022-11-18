@@ -22,7 +22,7 @@ CONSOLE_LOG="/tmp/resnet_run_${seed}.log"
 echo "running benchmark with seed $seed"
 # Quality of 0.2 is roughly a few hours of work
 # 0.749 is the final target quality
-./run.sh $seed 0.749 |& tee ${CONSOLE_LOG}
+./mlperf_resnet50.sh $seed 0.749 |& tee ${CONSOLE_LOG}
 sleep 3 
 ret_code=$?; if [[ $ret_code != 0 ]]; then exit $ret_code; fi
 
